@@ -1,0 +1,31 @@
+.left-bar{
+    width: 295px;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    background-color: rgb(243, 243, 243);   
+}
+
+.uaa-filter-sidebar {
+    flex: 0 0 280px;
+    background-color: rgb(243, 243, 243);
+    padding: 1rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+.uaa-filter-sidebar .uaa-app-header {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+
+.paper__two-panel__main {
+    margin-top: 3rem;
+}
+
+.button__right-corner {
+    margin: 40px 0px 10px 0px;
+    float: right;
+}
