@@ -6,6 +6,7 @@ import { users, organisationUnits } from '../constants/queries'
 import './styles/MainContent.css'
 import styles from './styles/MainContent.style'
 import AndroidSetting from './AndroidSetting'
+import ProgramSettings from './ProgramSetting'
 
 const query = {
     users: {
@@ -71,7 +72,7 @@ const MainContent = () => {
             </header>
 
             <AndroidSetting />
-            
+            {/* <ProgramSettings /> */}
         </div>
     )
 }
