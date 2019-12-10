@@ -1,12 +1,13 @@
 import React from 'react'
 
 import i18n from '@dhis2/d2-i18n'
-import { InputField, SelectField, RadioGroup, Button } from '@dhis2/ui-core'
+import { InputField, SingleSelectField, SingleSelectOption, RadioGroupField, Radio ,Button } from '@dhis2/ui-core'
 import * as components from '@dhis2/ui-core'
-import { Select } from '@dhis2/ui-core/build/cjs/Select'
-// import { Select } from '@dhis2/ui-core/build/cjs/Select'
-//import moduleName from '@dhis2/ui-core/build/cjs/SingleSelect'
-// import { SingleSelectOption } from '@dhis2/ui-core/build/cjs/SingleSelectOption'
+
+/* import {
+    metadataOptions } from '../constants/android-settings' */
+
+import { metadataOptions } from '../constants/android-settings'
 
 console.log('components', components)
 
@@ -14,65 +15,124 @@ const AndroidSetting = () => {
 
     return(
         <div>
-            {/* Selected need option */}
-            <SelectField
+            <SingleSelectField
                 id="metadataSync"
                 name="Metadata"
                 label="Metadata Sync"
-                onChange={e => console.log(e.target)}
+                onChange={function onChange(selected) { return alert("Selected changed to: ".concat(JSON.stringify(selected, null, 2))) }}
                 selected={{
                     label: 'one',
                     value: '1'
                 }}
             >
-            </SelectField>
+                <SingleSelectOption
+                    label="one"
+                    value="1"
+                />
 
-            <SelectField
+                {
+                    metadataOptions.map(
+                        option => 
+                        (
+                            <SingleSelectOption
+                                key={option.value}
+                                label={option.value}
+                                value={option.value}
+                            />
+                        )
+                    )
+                }
+
+                <SingleSelectOption
+                    label="two"
+                    value="2"
+                />
+                <SingleSelectOption
+                    label="three"
+                    value="3"
+                />
+                <SingleSelectOption
+                    label="four"
+                    value="4"
+                />
+            </SingleSelectField>
+
+            <SingleSelectField
                 id="dataSync"
                 name="dataSync"
                 label="Data Sync"
-                onChange={e => console.log(e.target)}
+                onChange={function onChange(selected) { return alert("Selected changed to: ".concat(JSON.stringify(selected, null, 2))) }}
                 selected={{
                     label: 'one',
                     value: '1'
                 }}
             >
-            </SelectField>
+                <SingleSelectOption
+                    label="one"
+                    value="1"
+                />
+                <SingleSelectOption
+                    label="two"
+                    value="2"
+                />
+                <SingleSelectOption
+                    label="three"
+                    value="3"
+                />
+                <SingleSelectOption
+                    label="four"
+                    value="4"
+                />
+            </SingleSelectField>
 
             <InputField
-                inputWidth="220px"
                 label="SMS Gateway Phone number where SMS are sent"
                 id="numberSmsToSent"
                 name="numberSmsToSent"
-                onChange={e => console.log(e.target.value)}
+                onChange={e => console.log(e.value)}
             />
             <InputField
-                inputWidth="220px"
                 id="numberSmsConfirmation"
                 name="numberSmsConfirmation"
                 label="Confirm SMS Gateway Phone number"
-                onChange={e => console.log(e.target.value)}
+                onChange={e => console.log(e.value)}
             />
             <InputField
-                inputWidth="220px"
                 id="valuesTEI"
                 label="Reserved values downloaded per TEI attribute"
                 name="valuesTEI"
                 type="number"
                 min="0"
                 max="50"
-                onChange={e => console.log(e.target.value)}
+                onChange={e => console.log(e)}
             />
             
             <div>
-                <RadioGroup 
+                {/* <RadioGroup 
                     inline
                     label="Encrypt"
                     name="encryptDB"
                     options={[{value: 'yes', label: 'Yes'}, {value: 'no', label: 'No'}]}
                     onChange={e => console.log(e.target.value)}
                 >
-                </RadioGroup>
+                </RadioGroup> */}
+
+                <RadioGroupField
+                    label="Encrypt"
+                    name="encryptDB"
+                    onChange={e => console.log(e)}
+                    value="second"
+                >
+                    <Radio
+                        label="Yes"
+                        value="yes"
+                    />
+                    <Radio
+                        label="No"
+                        value="no"
+                    />
+                </RadioGroupField>
+
             </div>
                 
             <Button
