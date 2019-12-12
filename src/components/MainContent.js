@@ -1,12 +1,11 @@
 import React from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { useDataQuery } from '@dhis2/app-runtime'
-import { Card } from '@dhis2/ui-core'
 import { users, organisationUnits } from '../constants/queries'
 import './styles/MainContent.css'
-import styles from './styles/MainContent.style'
-import AndroidSetting from './AndroidSetting'
-import ProgramSettings from './ProgramSetting'
+// import styles from './styles/MainContent.style'
+import AndroidSetting from '../pages/android-settings/AndroidSetting'
+import ProgramSetting from '../pages/program-settings/ProgramSetting'
 
 const query = {
     users: {
@@ -72,7 +71,7 @@ const MainContent = () => {
             </header>
 
             <AndroidSetting />
-            {/* <ProgramSettings /> */}
+            {/* <ProgramSetting /> */}
         </div>
     )
 }

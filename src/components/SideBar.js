@@ -6,7 +6,8 @@ import { AndroidSettingsIcon, ProgramsIcon, DataSetIcon, TestRunIcon } from './I
 const SideBar = () => {
     return (
         <aside className="uaa-filter-sidebar left-bar paper__two-panel__side-bar">
-            <h1 className="uaa-app-header"> Usage Analytics test </h1>
+            <h1 className="uaa-app-header">  </h1> 
+            {/* Usage Analytics test */}
             <MenuList>
                 <MenuItem
                     icon={<AndroidSettingsIcon />}

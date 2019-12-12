@@ -4,7 +4,7 @@ import i18n from '@dhis2/d2-i18n'
 import { Table, TableHead, TableRowHead, TableCellHead, TableBody, TableRow, TableCell } from '@dhis2/ui-core'
 
 const SettingsTable = (tableData) => {
-    
+    console.log('props table data', tableData)
     return (
         <Table>
             <TableHead>
@@ -43,37 +43,3 @@ const SettingsTable = (tableData) => {
 }
 
 export default SettingsTable
-
-    /* < TableRow >
-    <TableCell>
-        Amaka
-                    </TableCell>
-    <TableCell>
-        Pretorius
-                    </TableCell>
-    <TableCell>
-        01/25/1996
-                    </TableCell>
-                </TableRow >
-    <TableRow>
-        <TableCell>
-            Meti
-                    </TableCell>
-        <TableCell>
-            Abiodun
-                    </TableCell>
-        <TableCell>
-            10/24/2010
-                    </TableCell>
-    </TableRow>
-    <TableRow>
-        <TableCell>
-            Eshe
-                    </TableCell>
-        <TableCell>
-            Okeke
-                    </TableCell>
-        <TableCell>
-            01/31/1995
-                    </TableCell>
-    </TableRow> */
