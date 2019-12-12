@@ -45,8 +45,14 @@ export const maxValues = {
 }
 
 export const androidSettingsDefault = {
-    metadataSync: '1d',
-    dataSync: '24h',
+    metadataSync: {
+        value: '1d',
+        label: '1d'
+    },
+    dataSync: {
+        value: '24h',
+        label: '24h'
+    },
     numberSmsToSent: '',
     numberSmsConfirmation: '',
     valuesTEI: '',
