@@ -23,25 +23,15 @@ const mutation = {
 const AndroidSetting = () => {
     const [metadataState, setMetadata] = useState(androidSettingsDefault.metadataSync)
     const [dataState, setData] = useState(androidSettingsDefault.dataSync)
-    const testFunction = (mutationParam) => {
+    const [encryptState, setEncrypt] = useState(androidSettingsDefault.encryptDB)
+    /* const testFunction = (mutationParam) => {
         const [mutate] = useDataMutation(mutationParam)
 
 
         console.log('mutation', mutation)
-        /* if (loading) {
-            console.log('loading Query')
-        } else if (error) {
-            console.log({
-                errorQuery: error
-            })
-        } else if (data) {
-            console.log({
-                dataQuery: data,
-            })
-        } */
     }
     
-    testFunction(mutation)
+    testFunction(mutation) */
 
     const handleChange = e => {
         //e.preventDefault()
@@ -58,13 +48,6 @@ const AndroidSetting = () => {
         this.updateGlobal = true */
         console.log(e)
         setMetadata(e.selected)
-       // mutate()
-        /* {
-            "type": "create",
-                "resource": "dataStore/MYTEST/test_keyname",
-                    "data": {
-                    }
-        } */
     }
 
     return(
@@ -76,7 +59,6 @@ const AndroidSetting = () => {
                 onChange={handleChange}
                 selected={metadataState}
             >
-                {/* function onChange(selected) { return alert("Selected changed to: ".concat(JSON.stringify(selected, null, 2))) } */}
                 {
                     metadataOptions.map(
                         option => 
@@ -114,7 +96,7 @@ const AndroidSetting = () => {
                 label="SMS Gateway Phone number where SMS are sent"
                 id="numberSmsToSent"
                 name="numberSmsToSent"
-                onChange={handleChange}
+                onChange={e => setEncrypt(e.value)}
             />
             <InputField
                 id="numberSmsConfirmation"
@@ -146,7 +128,7 @@ const AndroidSetting = () => {
                     label="Encrypt"
                     name="encryptDB"
                     onChange={e => console.log(e)}
-                    value={androidSettingsDefault.encryptDB}
+                    value={encryptState}
                 >
                     <Radio
                         label="Yes"
@@ -175,17 +157,3 @@ const AndroidSetting = () => {
 }
 
 export default AndroidSetting
-
-{/* <Card styles={styles.paperLayout}>
-    
-    {i18n.t('Android')}
-    {loading && <span> ... </span>}
-    {error && <span> {`ERROR: ${error.message}`} </span>}
-    {data &&
-        (
-            <pre>
-                {data.users.users.map(user => user.name).join('\n')}
-            </pre>
-        )
-    }
-</Card> */}

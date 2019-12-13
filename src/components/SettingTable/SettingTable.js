@@ -1,7 +1,8 @@
 import React from 'react'
 
 import i18n from '@dhis2/d2-i18n'
-import { Table, TableHead, TableRowHead, TableCellHead, TableBody, TableRow, TableCell } from '@dhis2/ui-core'
+import { Table, TableHead, TableRowHead, TableCellHead, TableBody, TableRow, TableCell, SingleSelectField, SingleSelectOption } from '@dhis2/ui-core'
+import { InputField } from '@dhis2/ui-core/build/cjs/InputField'
 
 const SettingsTable = (tableData) => {
     console.log('props table data', tableData)
@@ -28,10 +29,62 @@ const SettingsTable = (tableData) => {
                                 {i18n.t(row.option)}
                             </TableCell>
                             <TableCell>
-                                {i18n.t('Download')}
+                                {Array.isArray(row.download) === true ? (
+                                        <SingleSelectField
+                                            key={row.keyDownload}
+                                            onChange={e=> console.log(e)}
+                                            id={row.keyDownload}
+                                            name={row.keyDownload}
+                                            inputWidth="200px"
+                                        >
+                                            {row.download.map(option => (
+                                                <SingleSelectOption
+                                                    key={option.value}
+                                                    name={option.value}
+                                                    value={option.value}
+                                                    label={option.label}
+                                                />
+                                            ))}
+                                        </SingleSelectField>
+                                    ) : (
+                                        <InputField
+                                            id={row.keyDownload}
+                                            name={row.keyDownload}
+                                            onChange={e=> console.log(e)}
+                                            inputWidth="200px"
+                                        />
+                                    ) 
+                                }
+                                {/* {i18n.t('Download')} */}
                             </TableCell>
                             <TableCell>
-                                {i18n.t('DB Trimming')}
+                                {Array.isArray(row.DBTrimming) === true ? (
+                                    <SingleSelectField
+                                        key={row.keyDBTrimming}
+                                        onChange={e => console.log(e)}
+                                        id={row.keyDBTrimming}
+                                        name={row.keyDBTrimming}
+                                        inputWidth="200px"
+                                    >
+                                        {row.DBTrimming.map(option => (
+                                            <SingleSelectOption
+                                                key={option.value}
+                                                name={option.value}
+                                                value={option.value}
+                                                label={option.label}
+                                            />
+                                        ))}
+                                    </SingleSelectField>
+                                ) : (
+                                        <InputField
+                                            id={row.keyDBTrimming}
+                                            name={row.keyDBTrimming}
+                                            onChange={e => console.log(e)}
+                                            inputWidth="200px"
+                                        />
+                                    )
+                                }
+                                {/* {i18n.t('DB Trimming')} */}
                             </TableCell>
                         </TableRow>
                     ))
