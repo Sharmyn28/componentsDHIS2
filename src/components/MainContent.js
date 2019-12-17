@@ -4,8 +4,12 @@ import { useDataQuery } from '@dhis2/app-runtime'
 import { users, organisationUnits } from '../constants/queries'
 import './styles/MainContent.css'
 // import styles from './styles/MainContent.style'
+import { Switch, Route } from 'react-router-dom';
+
 import AndroidSetting from '../pages/android-settings/AndroidSetting'
 import ProgramSetting from '../pages/program-settings/ProgramSetting'
+import DataSetSetting from '../pages/dataset-settings/DataSetSetting'
+import TestAndroid from '../pages/test-android/TestAndroid'
 
 const query = {
     users: {
@@ -55,25 +59,77 @@ function testFunction (query) {
             "fields": "id,name,userCredentials,userGroups"
         }
     }
+} 
+ const { loading, error, data } = useDataQuery(query)
+ testFunction(users)
+    testFunction(organisationUnits("ImspTQPwCqd"))
+*/
+
+/* const AppRouter = ({ pageState }) => {
+    const routes = sections.map(section => {
+        const routeRender = () => {
+            const Page = section.component
+            return <Page sectionKey={section.key} {...pageState} />
+        }
+        return (
+            <Route
+                key={section.key}
+                exact
+                path={section.path}
+                render={routeRender}
+            />
+        )
+    })
+
+    // Home route
+    const homeRouteRender = () => <Home sectionKey="home" />
+
+    routes.push(<Route key="home" exact path="/" render={homeRouteRender} />)
+
+    // No Match Route
+    routes.push(<Route key="no-match-route" component={NoMatch} />)
+
+    return (
+        <main>
+            <Switch>{routes}</Switch>
+        </main>
+    )
 } */
 
 const MainContent = () => {
-    const { loading, error, data } = useDataQuery(query)
-    testFunction(users)
-    testFunction(organisationUnits("ImspTQPwCqd"))
-
     return (
-        <div>
+        <div className="col-sm-10" >
             <header className="header">
                 <h1 className="paper__two-panel__main-title">
                     {i18n.t('Android Settings')}
                 </h1>
             </header>
 
-            <AndroidSetting />
+            <Switch>
+                <Route exact path="/">
+                    <AndroidSetting />
+                </Route>
+                <Route exact path="/android-setting">
+                    <AndroidSetting />
+                </Route>
+                <Route exact path="/program-setting">
+                    <ProgramSetting />
+                </Route>
+                <Route exact path="/dataset-setting">
+                    <DataSetSetting />
+                </Route>
+                <Route exact path="/test-android-login">
+                    <TestAndroid />
+                </Route>
+            </Switch>
+
+            {/* <AndroidSetting /> */}
             {/* <ProgramSetting /> */}
+            {/* <DataSetSetting /> */}
         </div>
     )
 }
 
 export default MainContent
+
+{/* Grid item xs={8} */}
