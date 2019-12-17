@@ -3,12 +3,12 @@ import React from 'react'
 const style = {
     color: 'rgb(117, 117, 117)',
     //position: 'absolute',
-    fontSize: '24px',
+    fontSize: '20px',
     userSelect: 'none',
-    height: '24px',
-    width: '24px',
+    height: '20px',
+    width: '20px',
     //top: '0px',
-    margin: '12px',
+    margin: '10px',
     //left: '4px',
 }
 
@@ -17,9 +17,9 @@ export const AndroidSettingsIcon = () => {
     return (
         <span style={style}>
             <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
@@ -40,9 +40,9 @@ export const ProgramsIcon = () => {
     return (
         <span style={style}>
             <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
@@ -62,9 +62,9 @@ export const DataSetIcon = () => {
     return (
         <span style={style}>
             <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
@@ -84,9 +84,9 @@ export const TestRunIcon = () => {
     return (
         <span style={style}>
             <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
