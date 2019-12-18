@@ -2,77 +2,69 @@ import React from 'react'
 import './styles/SideBar.css'
 import { MenuList, MenuItem } from '@dhis2/ui-core'
 import { AndroidSettingsIcon, ProgramsIcon, DataSetIcon, TestRunIcon } from './IconSvg'
+import MenuSection from '../constants/menu-sections'
 import { Link } from "react-router-dom";
+import linkStyles from '../components/styles/link.module.css'
+import sideBarStyles from '../components/styles/sideBar.module.css';
 
 const SideBar = () => {
     return (
-      <div className="col-sm-2 uaa-filter-sidebar">
-        <h1 className="uaa-app-header"> </h1>
-        {/* Usage Analytics test */}
+      <div className={`col-sm-2 ${sideBarStyles.sidebar}`}>
+        <h1 className={sideBarStyles.sidebar_header}> </h1>
+        {/* Usage Analytics test   href="/android-setting"*/}
         <MenuList>
-          <MenuItem
-            icon={<AndroidSettingsIcon />}
-            label="Android"
-            value="android"
-            href="/android-setting"
-          />
-          <MenuItem
-            icon={<ProgramsIcon />}
-            label="Programs"
-            href="/program-setting"
-            value="programs"
-          />
-          <MenuItem
-            icon={<DataSetIcon />}
-            label="Data Sets"
-            href="/dataset-setting"
-            value="dataSets"
-          />
-          <MenuItem
-            icon={<TestRunIcon />}
-            label="Test Android Login"
-            value="testAndroid"
-            href="/test-android-login"
-          />
+          {/* <Link to="/android-setting" className={linkStyles.link}> 
+            <MenuItem
+              icon={<AndroidSettingsIcon />}
+              label="Android"
+              value="android"
+            /> 
+          </Link>
+          <Link to="/program-setting" className={linkStyles.link}>
+            <MenuItem
+              icon={<ProgramsIcon />}
+              label="Programs" 
+              value="programs"
+            />
+          </Link>
+          <Link to="/dataset-setting" className={linkStyles.link}>
+            <MenuItem
+              icon={<DataSetIcon />}
+              label="Data Sets"
+              value="dataSets"
+            />
+          </Link>
+          <Link to="/test-android-login" className={linkStyles.link}>
+            <MenuItem
+              icon={<TestRunIcon />}
+              label="Test Android Login"
+              value="testAndroid"
+            />
+          </Link> */}
+          
+            {MenuSection.map(section => {
+              {/* const IconRender = () => {
+                const Icon = section.icon
+                return <Icon />
+              } */}
+
+              return (
+                <Link
+                  key={section.key}
+                  to={section.path}
+                  className={linkStyles.link}>
+                  <MenuItem
+                    icon={<section.icon />}
+                    label={section.label}
+                    value={section.value}
+                  />
+                </Link>
+              )
+            })}
+          
         </MenuList>
       </div>
     );
 }
 
 export default SideBar
-
-{/*
-  onClick={function onClick(val) {
-              alert("this is ".concat(val));
-            }}
-Grid item xs={4}
- <aside className="uaa-filter-sidebar left-bar paper__two-panel__side-bar">
-            <h1 className="uaa-app-header">  </h1> 
-            
-            <MenuList>
-                <MenuItem
-                    icon={<AndroidSettingsIcon />}
-                    label="Android"
-                    onClick={function onClick(val) { alert("this is ".concat(val)) }}
-                    value="android"
-                />
-                <MenuItem
-                    icon={<ProgramsIcon />}
-                    label="Programs"
-                    onClick={function onClick(val) { alert("this is ".concat(val)) }}
-                    value="programs"
-                />
-                <MenuItem
-                    icon={<DataSetIcon />}
-                    label="Data Sets"
-                    onClick={function onClick(val) { alert("this is ".concat(val)) }}
-                    value="dataSets"
-                />
-                <MenuItem
-                    icon={<TestRunIcon />}
-                    label="Test Android Login"
-                    onClick={function onClick(val) { alert("this is ".concat(val)) }}
-                    value="testAndroid"
-                />
-            </MenuList>
-        </aside> */}
