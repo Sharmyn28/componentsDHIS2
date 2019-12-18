@@ -4,7 +4,7 @@ import { useDataQuery } from '@dhis2/app-runtime'
 import { users, organisationUnits } from '../constants/queries'
 import './styles/MainContent.css'
 // import styles from './styles/MainContent.style'
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
 import AndroidSetting from '../pages/android-settings/AndroidSetting'
 import ProgramSetting from '../pages/program-settings/ProgramSetting'
@@ -96,6 +96,17 @@ function testFunction (query) {
     )
 } */
 
+const NoMatch = () => {
+    const location = useLocation()
+    return (
+        <div>
+            <h3>
+                No match for <code>{location.pathname}</code>
+            </h3>
+        </div>
+    )
+}
+
 const MainContent = () => {
     return (
         <div className="col-sm-10" >
@@ -121,6 +132,9 @@ const MainContent = () => {
                 <Route exact path="/test-android-login">
                     <TestAndroid />
                 </Route>
+                {/* <Route key="no-match-route" path="*">
+                   <NoMatch />
+                </Route> */}
             </Switch>
 
             {/* <AndroidSetting /> */}
@@ -131,5 +145,3 @@ const MainContent = () => {
 }
 
 export default MainContent
-
-{/* Grid item xs={8} */}
