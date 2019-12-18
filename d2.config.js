@@ -1,7 +1,7 @@
 const config = {
     name: 'test',
-    title: 'Settings app test',
-    description: 'A simple application for doing DHIS2 things',
+    title: 'Android Settings App',
+    description: 'A simple application for DHIS2 components practice',
     type: 'app',
 
     entryPoints: {
