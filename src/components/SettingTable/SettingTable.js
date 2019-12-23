@@ -42,7 +42,7 @@ const SettingsTable = (tableData) => {
                                                     key={option.value}
                                                     name={option.value}
                                                     value={option.value}
-                                                    label={option.label}
+                                                    label={i18n.t(option.label)}
                                                 />
                                             ))}
                                         </SingleSelectField>
@@ -71,7 +71,7 @@ const SettingsTable = (tableData) => {
                                                 key={option.value}
                                                 name={option.value}
                                                 value={option.value}
-                                                label={option.label}
+                                                label={i18n.t(option.label)}
                                             />
                                         ))}
                                     </SingleSelectField>
