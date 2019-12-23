@@ -3,11 +3,10 @@ import React, { useState } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import { useDataMutation } from '@dhis2/app-runtime'
 import { InputField, SingleSelectField, SingleSelectOption, RadioGroupField, Radio ,Button } from '@dhis2/ui-core'
-import * as components from '@dhis2/ui-core'
 
 import { metadataOptions, dataOptions, androidSettingsDefault } from '../../constants/android-settings'
-
-console.log('components', components)
+import InputTextField from '../../components/InputField/InputTextField'
+import InputNumberField from '../../components/InputField/InputNumberField';
 
 const mutation = {
     type: "create",
@@ -17,13 +16,11 @@ const mutation = {
     }
 }
 
-
-
-
 const AndroidSetting = () => {
     const [metadataState, setMetadata] = useState(androidSettingsDefault.metadataSync)
     const [dataState, setData] = useState(androidSettingsDefault.dataSync)
     const [encryptState, setEncrypt] = useState(androidSettingsDefault.encryptDB)
+    //const [numberState, setNumber] = useState()
     /* const testFunction = (mutationParam) => {
         const [mutate] = useDataMutation(mutationParam)
 
@@ -48,6 +45,11 @@ const AndroidSetting = () => {
         this.updateGlobal = true */
         console.log(e)
         setMetadata(e.selected)
+    }
+
+    const handleChangeNumber = e => {
+        console.log(e, e.value)
+        setEncrypt(e.value)
     }
 
     return(
@@ -91,20 +93,50 @@ const AndroidSetting = () => {
                     )
                 }
             </SingleSelectField>
+            
+            <InputTextField
+                label="SMS Gateway Phone number where SMS are sent"
+                name="numberSmsToSent"
+                length="9"
+                id="numberSmsToSent"
+            />
 
-            <InputField
+            <InputTextField
+                label="Confirm SMS Gateway Phone number"
+                name="numberSmsConfirmation"
+                length="9"
+                onChange={e => console.log(e, e.value)}
+                id="numberSmsConfirmation"
+            />
+
+            {/* <InputTextField
+                label="Reserved values downloaded per TEI attribute"
+                name="dgsf"
+                type="number"
+            /> */}
+
+            <InputNumberField
+                label="Reserved values downloaded per TEI attribute"
+                name="valuesTEI"
+                min="0"
+                max="50"
+                step="10"
+                id="valuesTEI"
+            />
+
+            {/* <InputField
                 label="SMS Gateway Phone number where SMS are sent"
                 id="numberSmsToSent"
                 name="numberSmsToSent"
-                onChange={e => setEncrypt(e.value)}
+                onChange={handleChangeNumber}
             />
             <InputField
                 id="numberSmsConfirmation"
                 name="numberSmsConfirmation"
                 label="Confirm SMS Gateway Phone number"
                 onChange={e => console.log(e, e.value)}
-            />
-            <InputField
+            /> */}
+            {/* <InputField
                 id="valuesTEI"
                 label="Reserved values downloaded per TEI attribute"
                 name="valuesTEI"
@@ -112,18 +144,9 @@ const AndroidSetting = () => {
                 min="0"
                 max="50"
                 onChange={e => console.log(e)}
-            />
+            /> */}
             
             <div>
-                {/* <RadioGroup 
-                    inline
-                    label="Encrypt"
-                    name="encryptDB"
-                    options={[{value: 'yes', label: 'Yes'}, {value: 'no', label: 'No'}]}
-                    onChange={e => console.log(e.target.value)}
-                >
-                </RadioGroup> */}
-
                 <RadioGroupField
                     label="Encrypt"
                     name="encryptDB"
