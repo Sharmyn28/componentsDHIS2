@@ -2,7 +2,6 @@ import React from 'react'
 import styles from '../styles/inputField.module.css';
 
 const InputTextField = (inputData) => {
-    console.log('input', inputData)
     return (
         <div className={styles.input_container}>
             <label className={styles.input_container_label}>
@@ -14,10 +13,8 @@ const InputTextField = (inputData) => {
                         name={inputData.name}
                         maxLength={inputData.length}
                         className={styles.input_field}
-                        onChange={e => {
-                            e.preventDefault()
-                            console.log(e.target, e.target.value)
-                        }} />
+                        value={inputData.value}
+                        onChange={inputData.onChange} />
                 </div>
             </div>
         </div>

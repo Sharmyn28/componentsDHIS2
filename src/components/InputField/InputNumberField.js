@@ -2,7 +2,6 @@ import React from 'react'
 import styles from '../styles/inputField.module.css';
 
 const InputNumberField = (inputData) => {
-    console.log('input', inputData)
     return (
         <div className={styles.input_container}>
             <label className={styles.input_container_label}>
@@ -16,11 +15,9 @@ const InputNumberField = (inputData) => {
                         max={inputData.max}
                         min={inputData.min}
                         step={inputData.step}
+                        value={inputData.value}
                         className={styles.input_field}
-                        onChange={e => {
-                            e.preventDefault()
-                            console.log(e.target, e.target.value)
-                        }} />
+                        onChange={inputData.onChange} />
                 </div>
             </div>
         </div>
@@ -28,3 +25,8 @@ const InputNumberField = (inputData) => {
 }
 
 export default InputNumberField
+
+/* e => {
+    e.preventDefault()
+    console.log(e.target, e.target.value)
+} */
