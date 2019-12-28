@@ -4,7 +4,7 @@ import i18n from '@dhis2/d2-i18n'
 import { useDataMutation } from '@dhis2/app-runtime'
 import { InputField, SingleSelectField, SingleSelectOption, RadioGroupField, Radio ,Button } from '@dhis2/ui-core'
 
-import { metadataOptions, dataOptions, androidSettingsDefault } from '../../constants/android-settings'
+import { metadataOptions, dataOptions, androidSettingsDefault, maxValues } from '../../constants/android-settings'
 import InputTextField from '../../components/InputField/InputTextField'
 import InputNumberField from '../../components/InputField/InputNumberField';
 
@@ -20,7 +20,9 @@ const AndroidSetting = () => {
     const [metadataState, setMetadata] = useState(androidSettingsDefault.metadataSync)
     const [dataState, setData] = useState(androidSettingsDefault.dataSync)
     const [encryptState, setEncrypt] = useState(androidSettingsDefault.encryptDB)
-    //const [numberState, setNumber] = useState()
+    const [numberState, setNumber] = useState()
+    const [numberConfirmationState, setNumberConfirmation] = useState()
+    const [valueTEIState, setValueTEI] = useState()
     /* const testFunction = (mutationParam) => {
         const [mutate] = useDataMutation(mutationParam)
 
@@ -47,17 +49,69 @@ const AndroidSetting = () => {
         setMetadata(e.selected)
     }
 
-    const handleChangeNumber = e => {
-        console.log(e, e.value)
-        setEncrypt(e.value)
+    const handleChangeInput = e => {
+        console.log('change input', e, e.target)
+        let inputName
+        let valueInput
+        /* if (e.target) {
+            inputName = e.target.name
+        } else {
+            inputName = e.name
+        } */
+        e.target ? inputName = e.target.name : inputName = e.name
+        console.log('inputname', inputName)
+        switch (inputName) {
+            case 'numberSmsToSent':
+                //e.preventDefault();
+                setNumber(e.target.value)
+                break;
+            case 'numberSmsConfirmation':
+                //e.preventDefault();
+                setNumberConfirmation(e.target.value)
+                break;
+            case 'valuesTEI':
+                e.preventDefault();
+                valueInput = e.target.value
+                e.target.value > maxValues.valuesTEI
+                    ? (e.target.value = maxValues.valuesTEI)
+                    : (e.target.value = valueInput)
+                
+                setValueTEI(e.target.value)
+                break;
+            case 'encryptDB':
+                setEncrypt(e.value)
+                break;
+            default:
+                break;
+        }
+        
+    }
+
+    const setDefaultState = () => {
+        console.log('current', {
+            metadata: metadataState,
+            data: dataState,
+            number: numberState,
+            confirm: numberConfirmationState,
+            values: valueTEIState,
+            encrypt: encryptState
+        })
+        console.log('default', {
+            metadata: androidSettingsDefault.metadataSync,
+            data: androidSettingsDefault.dataSync,
+            number: androidSettingsDefault.numberSmsToSent,
+            confirm: androidSettingsDefault.numberSmsConfirmation,
+            values: androidSettingsDefault.valuesTEI,
+            encrypt: androidSettingsDefault.encryptDB
+        })
     }
 
     return(
         <div>
             <SingleSelectField
                 id="metadataSync"
-                name="Metadata"
-                label="Metadata Sync"
+                name="metadataSync"
+                label={i18n.t("Metadata Sync")}
                 onChange={handleChange}
                 selected={metadataState}
             >
@@ -78,7 +132,7 @@ const AndroidSetting = () => {
             <SingleSelectField
                 id="dataSync"
                 name="dataSync"
-                label="Data Sync"
+                label={i18n.t("Data Sync")}
                 onChange={ e => { setData(e.selected) } }
                 selected={dataState}
             >   
@@ -95,62 +149,39 @@ const AndroidSetting = () => {
             </SingleSelectField>
             
             <InputTextField
-                label="SMS Gateway Phone number where SMS are sent"
+                label={i18n.t("SMS Gateway Phone number where SMS are sent")}
                 name="numberSmsToSent"
                 length="9"
+                value={numberState}
+                onChange={handleChangeInput}
                 id="numberSmsToSent"
             />
 
             <InputTextField
-                label="Confirm SMS Gateway Phone number"
+                label={i18n.t("Confirm SMS Gateway Phone number")}
                 name="numberSmsConfirmation"
                 length="9"
-                onChange={e => console.log(e, e.value)}
+                value={numberConfirmationState}
+                onChange={handleChangeInput}
                 id="numberSmsConfirmation"
             />
-
-            {/* <InputTextField
-                label="Reserved values downloaded per TEI attribute"
-                name="dgsf"
-                type="number"
-            /> */}
 
             <InputNumberField
-                label="Reserved values downloaded per TEI attribute"
+                label={i18n.t("Reserved values downloaded per TEI attribute")}
                 name="valuesTEI"
                 min="0"
-                max="50"
+                max={maxValues.valuesTEI}
                 step="10"
+                value={valueTEIState}
+                onChange={handleChangeInput}
                 id="valuesTEI"
             />
-
-            {/* <InputField
-                label="SMS Gateway Phone number where SMS are sent"
-                id="numberSmsToSent"
-                name="numberSmsToSent"
-                onChange={handleChangeNumber}
-            />
-            <InputField
-                id="numberSmsConfirmation"
-                name="numberSmsConfirmation"
-                label="Confirm SMS Gateway Phone number"
-                onChange={e => console.log(e, e.value)}
-            /> */}
-            {/* <InputField
-                id="valuesTEI"
-                label="Reserved values downloaded per TEI attribute"
-                name="valuesTEI"
-                type="number"
-                min="0"
-                max="50"
-                onChange={e => console.log(e)}
-            /> */}
             
             <div>
                 <RadioGroupField
-                    label="Encrypt"
+                    label={i18n.t("Encrypt")}
                     name="encryptDB"
-                    onChange={e => console.log(e)}
+                    onChange={handleChangeInput}
                     value={encryptState}
                 >
                     <Radio
@@ -167,7 +198,7 @@ const AndroidSetting = () => {
                 
             <Button
                 name="Button"
-                onClick={function () { console.log("default") }}
+                onClick={setDefaultState}
                 primary
                 type="button"
                 value="default"
