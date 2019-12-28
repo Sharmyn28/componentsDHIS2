@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import i18n from '@dhis2/d2-i18n'
 import { useDataMutation } from '@dhis2/app-runtime'
@@ -19,10 +19,32 @@ const mutation = {
 const AndroidSetting = () => {
     const [metadataState, setMetadata] = useState(androidSettingsDefault.metadataSync)
     const [dataState, setData] = useState(androidSettingsDefault.dataSync)
-    const [encryptState, setEncrypt] = useState(androidSettingsDefault.encryptDB)
-    const [numberState, setNumber] = useState()
+    //const [encryptState, setEncrypt] = useState(androidSettingsDefault.encryptDB)
+    /* const [numberState, setNumber] = useState()
     const [numberConfirmationState, setNumberConfirmation] = useState()
-    const [valueTEIState, setValueTEI] = useState()
+    const [valueTEIState, setValueTEI] = useState() */
+    
+    const [inputValues, setInputValues] = useState({
+        metadataSync: androidSettingsDefault.metadataSync.value,
+        dataSync: androidSettingsDefault.dataSync.value,
+        numberSmsToSent: '',
+        numberSmsConfirmation: '',
+        valuesTEI: '',
+        encryptDB: androidSettingsDefault.encryptDB
+    })
+    const didMountRef = useRef(false)
+    const [ updateGlobal, setUpdateGlobal ] = useState(false)
+
+    useEffect(() => {
+        if (didMountRef.current) {
+            console.log('updated', updateGlobal, inputValues)
+            // save data in dataStore
+        } else {
+            didMountRef.current = true
+            console.log('mounted?', updateGlobal)
+        }
+    })
+
     /* const testFunction = (mutationParam) => {
         const [mutate] = useDataMutation(mutationParam)
 
@@ -32,35 +54,40 @@ const AndroidSetting = () => {
     
     testFunction(mutation) */
 
-    const handleChange = e => {
+    const handleSelectedMetadata = e => {
         //e.preventDefault()
-        /* if (e.target.name === 'valuesTEI') {
-            const valueInput = e.target.value
-            e.target.value > maxValues.valuesTEI
-                ? (e.target.value = maxValues.valuesTEI)
-                : (e.target.value = valueInput)
-        }
-        this.setState({
-            ...this.state,
-            [e.target.name]: e.target.value,
-        })
-        this.updateGlobal = true */
         console.log(e)
         setMetadata(e.selected)
+        setInputValues({ ...inputValues, metadataSync: e.selected.value });
+        setUpdateGlobal(true)
+    }
+
+    const handleSelectedData = e => {
+        //e.preventDefault()
+        console.log(e)
+        setData(e.selected)
+        setInputValues({ ...inputValues, dataSync: e.selected.value });
+        setUpdateGlobal(true)
     }
 
     const handleChangeInput = e => {
-        console.log('change input', e, e.target)
-        let inputName
-        let valueInput
-        /* if (e.target) {
-            inputName = e.target.name
+        if (e.target) {
+            console.log(e.target.name, e.target.value)
+            const valueInput = e.target.value
+            if (e.target.name === 'valuesTEI') {
+                e.target.value > maxValues.valuesTEI
+                    ? (e.target.value = maxValues.valuesTEI)
+                    : (e.target.value = valueInput)
+            }
+            const { name, value } = e.target;
+            setInputValues({ ...inputValues, [name]: value });
         } else {
-            inputName = e.name
-        } */
-        e.target ? inputName = e.target.name : inputName = e.name
-        console.log('inputname', inputName)
-        switch (inputName) {
+            const { name, value } = e
+            setInputValues({ ...inputValues, [name]: value });
+        }
+
+        setUpdateGlobal(true)
+        /* switch (inputName) {
             case 'numberSmsToSent':
                 //e.preventDefault();
                 setNumber(e.target.value)
@@ -83,7 +110,7 @@ const AndroidSetting = () => {
                 break;
             default:
                 break;
-        }
+        } */
         
     }
 
@@ -91,10 +118,10 @@ const AndroidSetting = () => {
         console.log('current', {
             metadata: metadataState,
             data: dataState,
-            number: numberState,
-            confirm: numberConfirmationState,
-            values: valueTEIState,
-            encrypt: encryptState
+            number: inputValues.numberSmsToSent,
+            confirm: inputValues.numberSmsConfirmation,
+            values: inputValues.valuesTEI,
+            encrypt: inputValues.encryptDB
         })
         console.log('default', {
             metadata: androidSettingsDefault.metadataSync,
@@ -112,7 +139,7 @@ const AndroidSetting = () => {
                 id="metadataSync"
                 name="metadataSync"
                 label={i18n.t("Metadata Sync")}
-                onChange={handleChange}
+                onChange={handleSelectedMetadata}
                 selected={metadataState}
             >
                 {
@@ -133,7 +160,7 @@ const AndroidSetting = () => {
                 id="dataSync"
                 name="dataSync"
                 label={i18n.t("Data Sync")}
-                onChange={ e => { setData(e.selected) } }
+                onChange={ handleSelectedData }
                 selected={dataState}
             >   
                 {
@@ -152,7 +179,7 @@ const AndroidSetting = () => {
                 label={i18n.t("SMS Gateway Phone number where SMS are sent")}
                 name="numberSmsToSent"
                 length="9"
-                value={numberState}
+                value={inputValues.numberSmsToSent}
                 onChange={handleChangeInput}
                 id="numberSmsToSent"
             />
@@ -161,7 +188,7 @@ const AndroidSetting = () => {
                 label={i18n.t("Confirm SMS Gateway Phone number")}
                 name="numberSmsConfirmation"
                 length="9"
-                value={numberConfirmationState}
+                value={inputValues.numberSmsConfirmation}
                 onChange={handleChangeInput}
                 id="numberSmsConfirmation"
             />
@@ -172,7 +199,7 @@ const AndroidSetting = () => {
                 min="0"
                 max={maxValues.valuesTEI}
                 step="10"
-                value={valueTEIState}
+                value={inputValues.valuesTEI}
                 onChange={handleChangeInput}
                 id="valuesTEI"
             />
@@ -182,7 +209,7 @@ const AndroidSetting = () => {
                     label={i18n.t("Encrypt")}
                     name="encryptDB"
                     onChange={handleChangeInput}
-                    value={encryptState}
+                    value={inputValues.encryptDB}
                 >
                     <Radio
                         label="Yes"
