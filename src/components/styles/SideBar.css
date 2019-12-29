@@ -10,9 +10,9 @@
 }
 
 .uaa-filter-sidebar {
-    flex: 0 0 280px;
-    background-color: rgb(243, 243, 243);
-    padding: 1rem;
+    /* flex: 0 0 280px; */
+    /* background-color: rgb(243, 243, 243); */
+    /* padding: 1rem; */
     border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 .uaa-filter-sidebar .uaa-app-header {
