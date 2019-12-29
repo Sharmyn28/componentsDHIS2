@@ -10,7 +10,7 @@ import InputNumberField from '../../components/InputField/InputNumberField';
 
 const mutation = {
     type: "create",
-    resource: "dataStore/TEST_MILAGROS/test_m",
+    resource: "dataStore/TEST_M2/test_m",
     data: {
         prueba: "prueba"
     }
@@ -39,17 +39,19 @@ const AndroidSetting = () => {
         } else {
             didMountRef.current = true
             console.log('mounted?', updateGlobal)
+            //doMutation()
         }
     })
 
-    /* const testFunction = (mutationParam) => {
-        const [mutate] = useDataMutation(mutationParam)
+    /* const [mutate] = useDataMutation(mutation)
+    console.log('mutation', mutation)
 
-
-        console.log('mutation', mutation)
-    }
-    
-    testFunction(mutation) */
+    const doMutation = async () => {
+        await mutate()
+    } */
+    //mutate ()  
+    /* testFunction(mutation)
+    mutate() */
 
     const handleSelectedMetadata = e => {
         //e.preventDefault()
