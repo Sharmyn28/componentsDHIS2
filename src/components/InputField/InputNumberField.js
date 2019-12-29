@@ -1,32 +1,38 @@
 import React from 'react'
 import styles from '../styles/inputField.module.css';
+import PropTypes from '@dhis2/prop-types';
 
-const InputNumberField = (inputData) => {
+const InputNumberField = ({ label, name, max, min, step, value, onChange }) => {
     return (
         <div className={styles.input_container}>
             <label className={styles.input_container_label}>
-                <span> {inputData.label} </span>
+                <span> {label} </span>
             </label>
             <div className={styles.input_container_text}>
                 <div className={styles.input_field_container}>
                     <input
                         type="number"
-                        name={inputData.name}
-                        max={inputData.max}
-                        min={inputData.min}
-                        step={inputData.step}
-                        value={inputData.value}
+                        name={name}
+                        max={max}
+                        min={min}
+                        step={step}
+                        value={value}
                         className={styles.input_field}
-                        onChange={inputData.onChange} />
+                        onChange={onChange} />
                 </div>
             </div>
         </div>
     )
 }
 
-export default InputNumberField
+InputNumberField.propTypes = {
+    label: PropTypes.string.isRequired,
+    max: PropTypes.number.isRequired,
+    min: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    step: PropTypes.string.isRequired,
+    value: PropTypes.node.isRequired,
+    onChange: PropTypes.func.isRequired,
+}
 
-/* e => {
-    e.preventDefault()
-    console.log(e.target, e.target.value)
-} */
+export default InputNumberField
