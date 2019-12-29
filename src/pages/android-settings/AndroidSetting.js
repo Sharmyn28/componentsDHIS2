@@ -184,9 +184,9 @@ const AndroidSetting = () => {
                 length="9"
                 value={inputValues.numberSmsToSent}
                 onChange={handleChangeInput}
-                id="numberSmsToSent"
                 onBlur={checkMatchingConfirmation}
                 error={errorConfirmation}
+                id="numberSmsToSent"
             />
 
             <InputTextField
@@ -195,16 +195,16 @@ const AndroidSetting = () => {
                 length="9"
                 value={inputValues.numberSmsConfirmation}
                 onChange={handleChangeInput}
-                id="numberSmsConfirmation"
                 onBlur={checkMatchingConfirmation}
                 error={errorConfirmation}
+                id="numberSmsConfirmation"
             />
 
             <InputNumberField
                 label={i18n.t("Reserved values downloaded per TEI attribute")}
                 name="valuesTEI"
-                min="0"
                 max={maxValues.valuesTEI}
+                min="0"
                 step="10"
                 value={inputValues.valuesTEI}
                 onChange={handleChangeInput}
