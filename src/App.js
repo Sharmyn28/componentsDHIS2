@@ -1,8 +1,10 @@
 import React from 'react'
 import { DataQuery } from '@dhis2/app-runtime'
-import i18n from '@dhis2/d2-i18n'
 import SideBar from './components/SideBar'
 import MainContent from './components/MainContent'
+import { BrowserRouter as Router } from 'react-router-dom';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import './components/styles/layout.css';
 
 const query = {
     me: {
@@ -10,9 +12,24 @@ const query = {
     },
 }
 
-const MyApp = () => (
-    <div className="container">
-        <style jsx>{`
+const MyApp = () => {
+    return (
+        <Router>
+            <div className="container-fluid">
+                <div className="row">
+                    <SideBar />
+                    <MainContent />
+                </div>
+            </div>
+        </Router>
+    );
+}
+
+export default MyApp
+
+// Grid container
+ //<div className="container">
+        {/* <style jsx>{`
             .container {
                 position: absolute;
                 top: 48px;
@@ -25,7 +42,7 @@ const MyApp = () => (
                 justify-content: center;
                 font-size: 1rem;
             }
-        }`}</style>
+        }`}</style> */}
         {/* <DataQuery query={query}>
             {({ error, loading, data }) => {
                 if (error) return <span>ERROR</span>
@@ -40,9 +57,6 @@ const MyApp = () => (
                 )
             }}
         </DataQuery> */}
-        <SideBar />
+        {/* <SideBar />
         <MainContent />
-    </div>
-)
-
-export default MyApp
+    </div> */}
