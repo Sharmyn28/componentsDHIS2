@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 
 import i18n from '@dhis2/d2-i18n'
 import { useDataMutation } from '@dhis2/app-runtime'
-import { InputField, SingleSelectField, SingleSelectOption, RadioGroupField, Radio ,Button } from '@dhis2/ui-core'
+import { SingleSelectField, SingleSelectOption, RadioGroupField, Radio ,Button } from '@dhis2/ui-core'
 
 import { metadataOptions, dataOptions, androidSettingsDefault, maxValues } from '../../constants/android-settings'
 import InputTextField from '../../components/InputField/InputTextField'
@@ -17,13 +17,10 @@ const mutation = {
 }
 
 const AndroidSetting = () => {
+    const didMountRef = useRef(false)
+
     const [metadataState, setMetadata] = useState(androidSettingsDefault.metadataSync)
     const [dataState, setData] = useState(androidSettingsDefault.dataSync)
-    //const [encryptState, setEncrypt] = useState(androidSettingsDefault.encryptDB)
-    /* const [numberState, setNumber] = useState()
-    const [numberConfirmationState, setNumberConfirmation] = useState()
-    const [valueTEIState, setValueTEI] = useState() */
-    
     const [inputValues, setInputValues] = useState({
         metadataSync: androidSettingsDefault.metadataSync.value,
         dataSync: androidSettingsDefault.dataSync.value,
@@ -32,13 +29,13 @@ const AndroidSetting = () => {
         valuesTEI: '',
         encryptDB: androidSettingsDefault.encryptDB
     })
-    const didMountRef = useRef(false)
     const [ updateGlobal, setUpdateGlobal ] = useState(false)
+    const [ errorConfirmation, setErrorConfirmation ] = useState(false)
 
     useEffect(() => {
         if (didMountRef.current) {
             console.log('updated', updateGlobal, inputValues)
-            // save data in dataStore
+            // if updateGlobal === true save data in dataStore
         } else {
             didMountRef.current = true
             console.log('mounted?', updateGlobal)
@@ -87,31 +84,36 @@ const AndroidSetting = () => {
         }
 
         setUpdateGlobal(true)
-        /* switch (inputName) {
-            case 'numberSmsToSent':
-                //e.preventDefault();
-                setNumber(e.target.value)
-                break;
-            case 'numberSmsConfirmation':
-                //e.preventDefault();
-                setNumberConfirmation(e.target.value)
-                break;
-            case 'valuesTEI':
-                e.preventDefault();
-                valueInput = e.target.value
-                e.target.value > maxValues.valuesTEI
-                    ? (e.target.value = maxValues.valuesTEI)
-                    : (e.target.value = valueInput)
-                
-                setValueTEI(e.target.value)
-                break;
-            case 'encryptDB':
-                setEncrypt(e.value)
-                break;
-            default:
-                break;
-        } */
         
+    }
+
+    /**
+    * Updates Settings calling update api
+    */
+    const submitData = () => {
+        const androidData = inputValues
+        androidData.lastUpdated = new Date().toJSON()
+        //saveDataApi(androidData)
+    }
+
+    const saveDataApi = (data) => {
+        // save data in datastore
+    }
+
+    /**
+     * Checks if sms number and confirm number match
+     */
+    const checkMatchingConfirmation = () => {
+        if (
+            inputValues.numberSmsToSent !== '' &&
+            inputValues.numberSmsConfirmation !== ''
+        ) {
+            inputValues.numberSmsToSent !== inputValues.numberSmsConfirmation
+                ? setErrorConfirmation(true) 
+                : setErrorConfirmation(false)
+            console.log('cambiar', errorConfirmation)
+        } 
+        console.log(inputValues.numberSmsConfirmation, inputValues.numberSmsToSent)
     }
 
     const setDefaultState = () => {
@@ -131,6 +133,7 @@ const AndroidSetting = () => {
             values: androidSettingsDefault.valuesTEI,
             encrypt: androidSettingsDefault.encryptDB
         })
+        setUpdateGlobal(true)
     }
 
     return(
@@ -182,6 +185,8 @@ const AndroidSetting = () => {
                 value={inputValues.numberSmsToSent}
                 onChange={handleChangeInput}
                 id="numberSmsToSent"
+                onBlur={checkMatchingConfirmation}
+                error={errorConfirmation}
             />
 
             <InputTextField
@@ -191,6 +196,8 @@ const AndroidSetting = () => {
                 value={inputValues.numberSmsConfirmation}
                 onChange={handleChangeInput}
                 id="numberSmsConfirmation"
+                onBlur={checkMatchingConfirmation}
+                error={errorConfirmation}
             />
 
             <InputNumberField
