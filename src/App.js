@@ -10,7 +10,7 @@ import './components/styles/layout.css';
 const MyApp = () => {
     const didMountRef = useRef(false)
     const [namespaceState, setNamespace] = useState()
-    const [mutateAndroid] = useDataMutation(android_setting_mutation)
+    const [mutateAndroid] = useDataMutation(android_setting_mutation.create)
     const [mutateProgram] = useDataMutation(program_setting_mutation)
     const [mutateDataSet] = useDataMutation(dataset_setting_mutation)
     let namespaceFound

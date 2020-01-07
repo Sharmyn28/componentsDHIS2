@@ -4,17 +4,10 @@ import i18n from '@dhis2/d2-i18n'
 import { useDataMutation } from '@dhis2/app-runtime'
 import { SingleSelectField, SingleSelectOption, RadioGroupField, Radio ,Button } from '@dhis2/ui-core'
 
+import { android_setting_mutation } from '../../constants/mutation-datastore';
 import { metadataOptions, dataOptions, androidSettingsDefault, maxValues } from '../../constants/android-settings'
 import InputTextField from '../../components/InputField/InputTextField'
 import InputNumberField from '../../components/InputField/InputNumberField';
-
-const mutation = {
-    type: "create",
-    resource: "dataStore/TEST_M2/test_m",
-    data: {
-        prueba: "prueba"
-    }
-}
 
 const AndroidSetting = () => {
     const didMountRef = useRef(false)
@@ -31,10 +24,16 @@ const AndroidSetting = () => {
     })
     const [ updateGlobal, setUpdateGlobal ] = useState(false)
     const [ errorConfirmation, setErrorConfirmation ] = useState(false)
+    const [ mutateAndroid ] = useDataMutation(android_setting_mutation.update)
 
     useEffect(() => {
         if (didMountRef.current) {
             console.log('updated', updateGlobal, inputValues)
+            if (updateGlobal) {
+                submitData()
+                setUpdateGlobal(false)
+            }
+            
             // if updateGlobal === true save data in dataStore
         } else {
             didMountRef.current = true
@@ -42,16 +41,6 @@ const AndroidSetting = () => {
             //doMutation()
         }
     })
-
-    /* const [mutate] = useDataMutation(mutation)
-    console.log('mutation', mutation)
-
-    const doMutation = async () => {
-        await mutate()
-    } */
-    //mutate ()  
-    /* testFunction(mutation)
-    mutate() */
 
     const handleSelectedMetadata = e => {
         //e.preventDefault()
@@ -69,6 +58,10 @@ const AndroidSetting = () => {
         setUpdateGlobal(true)
     }
 
+
+    /**
+    * Handle change input number and text and radio types
+    */
     const handleChangeInput = e => {
         if (e.target) {
             console.log(e.target.name, e.target.value)
@@ -95,11 +88,16 @@ const AndroidSetting = () => {
     const submitData = () => {
         const androidData = inputValues
         androidData.lastUpdated = new Date().toJSON()
-        //saveDataApi(androidData)
+        saveDataApi(androidData)
+        console.log('submit data', androidData)
     }
 
-    const saveDataApi = (data) => {
+    const saveDataApi = async (data) => {
         // save data in datastore
+        await mutateAndroid({
+            id: 'android_settings',
+            data : data
+        })
     }
 
     /**
@@ -119,14 +117,6 @@ const AndroidSetting = () => {
     }
 
     const setDefaultState = () => {
-        console.log('current', {
-            metadata: metadataState,
-            data: dataState,
-            number: inputValues.numberSmsToSent,
-            confirm: inputValues.numberSmsConfirmation,
-            values: inputValues.valuesTEI,
-            encrypt: inputValues.encryptDB
-        })
         console.log('default', {
             metadata: androidSettingsDefault.metadataSync,
             data: androidSettingsDefault.dataSync,
@@ -135,6 +125,17 @@ const AndroidSetting = () => {
             values: androidSettingsDefault.valuesTEI,
             encrypt: androidSettingsDefault.encryptDB
         })
+        const androidDataDefault = {
+            metadataSync: androidSettingsDefault.metadataSync.value,
+            dataSync: androidSettingsDefault.dataSync.value,
+            numberSmsToSent: androidSettingsDefault.numberSmsToSent,
+            numberSmsConfirmation: androidSettingsDefault.numberSmsConfirmation,
+            valuesTEI: androidSettingsDefault.valuesTEI,
+            encryptDB: androidSettingsDefault.encryptDB
+        }
+        androidDataDefault.lastUpdated = new Date().toJSON()
+        console.log('submit default data', androidDataDefault)
+        saveDataApi(androidDataDefault)
         setUpdateGlobal(true)
     }
 
